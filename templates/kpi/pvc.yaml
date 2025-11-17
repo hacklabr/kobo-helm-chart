@@ -1,0 +1,20 @@
+{{- if .Values.kpi.extraVolumes }}
+{{- range $idx, $vol := .Values.kpi.extraVolumes }}
+{{- if eq ($vol.volumeMode | default "") "pvc" }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $vol.name }}
+spec:
+  accessModes:
+    - {{ $vol.accessMode | default "ReadWriteOnce" }}
+  {{- if $vol.storageClass }}
+  storageClassName: {{ $vol.storageClass }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ $vol.size | default "10Gi" }}
+---
+{{- end }}
+{{- end }}
+{{- end }}
