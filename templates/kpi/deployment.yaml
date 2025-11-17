@@ -37,7 +37,7 @@ spec:
       {{- if .Values.kpi.extraVolumes }}
         {{- range .Values.kpi.extraVolumes }}
           {{- if eq (.volumeMode | default "") "pvc" }}
-            {{- $hasPvc = true }}
+            {{- $hasPvc := true }}
           {{- end }}
         {{- end }}
       {{- end }}
