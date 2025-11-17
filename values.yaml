@@ -92,7 +92,7 @@ kpi:
       # KOBOCAT_AWS_STORAGE_BUCKET_NAME: ""
     secret:
       {}
-      # DATABASE_URL: "postgres://postgres:password@postgres-postgresql:5432/postgres"
+      # DATABASE_URL: "postgis://postgres:password@postgres-postgresql:5432/postgres"
       # CELERY_BROKER_URL: "redis://localhost:6379/2"
       # CACHE_URL: "redis://localhost:6379/4"
       # AWS_ACCESS_KEY_ID: ""

@@ -35,7 +35,7 @@ spec:
           - name: DATABASE_URL
             value: {{ (include "kobo.postgresql.url" .) }}
           - name: KC_DATABASE_URL
-            value: postgres://postgres:$(POSTGRES_PASSWORD)@{{ (include "kobo.postgresql.fullname" .) }}:5432/postgres
+            value: postgis://postgres:$(POSTGRES_PASSWORD)@{{ (include "kobo.postgresql.fullname" .) }}:5432/postgres
           {{- else }}
           - name: DATABASE_URL
             value: {{ required "kpi.env.secret.DATABASE_URL is a required value." .Values.kpi.env.secret.DATABASE_URL }}
