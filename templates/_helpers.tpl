@@ -93,7 +93,7 @@ PostgreSQL connection URL
 Requires POSTGRES_PASSWORD to be set environment variable
 */}}
 {{- define "kobo.postgresql.url" -}}
-{{- printf "postgres://postgres:$(POSTGRES_PASSWORD)@%s:5432/koboform" (include "kobo.postgresql.fullname" .) -}}
+{{- printf "postgis://postgres:$(POSTGRES_PASSWORD)@%s:5432/koboform" (include "kobo.postgresql.fullname" .) -}}
 {{- end -}}
 
 {{/*
