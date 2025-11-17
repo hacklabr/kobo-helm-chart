@@ -37,7 +37,7 @@ spec:
       {{- if .Values.kpi.extraVolumes }}
         {{- range .Values.kpi.extraVolumes }}
           {{- if eq (.volumeMode | default "") "pvc" }}
-            {{- $hasPvc := true }}
+            {{- $hasPvc = true }}
           {{- end }}
         {{- end }}
       {{- end }}
@@ -48,21 +48,15 @@ spec:
           command:
             - sh
             - -c
-            - >
-              {{- $cmd := "" }}
-              {{- range $idx, $vol := .Values.kpi.extraVolumes }}
-                {{- if eq ($vol.volumeMode | default "") "pvc" }}
-                  {{- $cmd = printf "%s chown -R 1000:1000 /mnt/vol%d &&" $cmd $idx }}
-                {{- end }}
-              {{- end }}
-              {{- printf "%s true" $cmd }}
+            - |
+              chown -R 1000:1000 /mnt-vols || true
           securityContext:
             runAsUser: 0
           volumeMounts:
             {{- range $idx, $vol := .Values.kpi.extraVolumes }}
               {{- if eq ($vol.volumeMode | default "") "pvc" }}
             - name: {{ $vol.name }}
-              mountPath: /mnt/vol{{ $idx }}
+              mountPath: /mnt-vols/vol{{ $idx }}
               {{- end }}
             {{- end }}
       {{- end }}
