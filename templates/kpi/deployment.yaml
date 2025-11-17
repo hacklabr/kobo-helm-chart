@@ -50,22 +50,19 @@ spec:
             - -c
             - >
               {{- $cmd := "" }}
-              {{- $volNum := 0 }}
-              {{- range .Values.kpi.extraVolumes }}
-                {{- if eq (.volumeMode | default "") "pvc" }}
-                  {{- $cmd = printf "%s chown -R 1000:1000 /mnt/vol%d &&" $cmd $volNum }}
-                  {{- $volNum = add $volNum 1 }}
+              {{- range $idx, $vol := .Values.kpi.extraVolumes }}
+                {{- if eq ($vol.volumeMode | default "") "pvc" }}
+                  {{- $cmd = printf "%s chown -R 1000:1000 /mnt/vol%d &&" $cmd $idx }}
                 {{- end }}
               {{- end }}
               {{- printf "%s true" $cmd }}
           securityContext:
             runAsUser: 0
           volumeMounts:
-            {{- range .Values.kpi.extraVolumes }}
-              {{- if eq (.volumeMode | default "") "pvc" }}
-            - name: {{ .name }}
-              mountPath: /mnt/vol{{ $volNum }}
-              {{- $volNum = add $volNum 1 }}
+            {{- range $idx, $vol := .Values.kpi.extraVolumes }}
+              {{- if eq ($vol.volumeMode | default "") "pvc" }}
+            - name: {{ $vol.name }}
+              mountPath: /mnt/vol{{ $idx }}
               {{- end }}
             {{- end }}
       {{- end }}
